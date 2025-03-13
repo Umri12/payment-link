@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPI Payment Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .payment-box {
+            background-color: orange;
+            padding: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            border-radius: 5px;
+        }
+        .copy-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid orange;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            position: relative;
+        }
+        .copy-btn {
+            background-color: white;
+            border: none;
+            color: orange;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .copy-message {
+            position: absolute;
+            top: -25px;
+            right: 10px;
+            background-color: green;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            display: none;
+        }
+        .payment-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .payment-btn {
+            flex: 1;
+            border: 1px solid orange;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .payment-btn img {
+            height: 30px;
+            margin-right: 5px;
+        }
+        .input-box {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid orange;
+            border-radius: 5px;
+        }
+        .error-message {
+            color: red;
+            display: none;
+        }
+        .submit-btn {
+            background-color: white;
+            color: orange;
+            border: 1px solid orange;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+        function copyUPI() {
+            var upiText = document.getElementById("upi-id").innerText;
+            navigator.clipboard.writeText(upiText).then(function() {
+                var message = document.getElementById("copy-message");
+                message.style.display = "block";
+                setTimeout(function() {
+                    message.style.display = "none";
+                }, 2000);
+            });
+        }
+        function validateRefNo() {
+            var refInput = document.getElementById("ref-no");
+            var errorMessage = document.getElementById("error-message");
+            if (refInput.value.length === 12) {
+                errorMessage.style.display = "none";
+                document.body.innerHTML = `
+                    <div class='container'>
+                        <img src='tick.png' alt='Tick' style='width: 50px;'>
+                        <h2>Congratulations!</h2>
+                        <p>Your product quota has been increased, come and use it!</p>
+                        <p><strong>Order Number:</strong> JKD202503032126055687apuh</p>
+                        <p><strong>Loan Amount:</strong> ₹ 3508</p>
+                        <p><strong>Name:</strong> Dhanasekaran</p>
+                        <p><strong>Mobile Number:</strong> 7868825687</p>
+                    </div>`;
+            } else {
+                errorMessage.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>UPI Information</h2>
+        <div class="payment-box">₹4109.00</div>
+        <h3>Payment Via UPI</h3>
+        <p>1. Copy UPI Information.</p>
+        <div class="copy-box">
+            <span id="upi-id">ANNATEASTALL@idbi</span>
+            <button class="copy-btn" onclick="copyUPI()">COPY</button>
+            <span id="copy-message" class="copy-message">Copied!</span>
+        </div>
+        <p>2. Transfer the amount using UPI ID, NOT MOBILE NUMBER.</p>
+        <div class="payment-options">
+            <a href="https://paytm.com/" target="_blank" class="payment-btn">
+    <img src="paytm.png" alt="Paytm">Paytm
+</a>
+<a href="https://www.phonepe.com/" target="_blank" class="payment-btn">
+    <img src="phonepe.png" alt="PhonePe">PhonePe
+</a>
+<a href="https://pay.google.com/" target="_blank" class="payment-btn">
+    <img src="gpay.png" alt="G Pay">G Pay
+</a>
+<a href="upi://pay" class="payment-btn">
+    <img src="upi.png" alt="UPI">UPI
+</a>
+
+        </div>
+        <p>3. Enter Ref No. to complete the recharge.</p>
+        <input type="text" id="ref-no" class="input-box" placeholder="Ref No.">
+        <p id="error-message" class="error-message">Please enter a valid 12-digit Ref No.</p>
+        <br>
+        <button class="submit-btn" onclick="validateRefNo()">Submit</button>
+    </div>
+</body>
+</html>
